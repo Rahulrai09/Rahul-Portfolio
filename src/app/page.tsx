@@ -162,7 +162,7 @@ export default function Home() {
               <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-acc"></span>
             </span>
             <p className="text-zinc-400 text-sm md:text-xl font-medium tracking-wide">
-              MBA Candidate <span className="text-zinc-600">·</span> Finance & Digital Marketing <span className="text-zinc-600">·</span> Strategy
+              Digital Marketer <span className="text-zinc-600">·</span> SEO <span className="text-zinc-600">·</span> Performance Marketing <span className="text-zinc-600">·</span> AI Video Creation <span className="text-zinc-600">·</span> Social Media <span className="text-zinc-600">·</span> Website Building <span className="text-zinc-600">·</span> AI Tools
             </p>
           </motion.div>
 
