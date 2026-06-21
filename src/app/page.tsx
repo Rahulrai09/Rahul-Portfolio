@@ -270,17 +270,18 @@ export default function Home() {
           <div className="relative border-l border-zinc-800 ml-4 md:ml-32">
             {[
               {
-                title: "MBA",
+                title: "MBA – Digital Marketing & Finance",
                 inst: "Lovely Professional University",
-                date: "2024–2026",
-                desc: "Specialization in Finance & Digital Marketing. Engaging in venture models, business strategies, and computational analytics.",
-                badge: "Finance & Digital Marketing"
+                date: "Aug 2024–May 2026",
+                desc: "Engaging in venture models, business strategies, and computational analytics.",
+                badge: "CGPA: 8.4"
               },
               {
                 title: "B.Com",
                 inst: "Punjab University",
-                date: "2020–2023",
-                desc: "Foundation in corporate accounting, financial systems, portfolio analytics, and commerce regulations."
+                date: "Jul 2020–Apr 2023",
+                desc: "Foundation in corporate accounting, financial systems, portfolio analytics, and commerce regulations.",
+                badge: "CGPA: 7.1"
               },
               {
                 title: "Class 12th",
@@ -348,8 +349,8 @@ export default function Home() {
               { name: "Canva", val: 85 },
               { name: "MS Excel", val: 85 },
               { name: "MS PowerPoint", val: 85 },
-              { name: "Zoho CRM", val: 65 },
-              { name: "Financial Modeling", val: 80 },
+              { name: "Website Building", val: 75 },
+              { name: "Meta Ads Manager", val: 85 },
               { name: "Google Ads / SEO", val: 82 },
               { name: "Data Visualization", val: 75 },
               { name: "Social Media Marketing", val: 85 }
@@ -457,23 +458,24 @@ export default function Home() {
           <div className="flex flex-col gap-8">
             {[
               {
-                org: "Billion Leads Digital Marketing Co., Pune",
-                role: "Finance Intern",
-                date: "Jan–Apr 2024",
+                org: "MNR Solutions (TWEOV – Silver Brand) | Noida",
+                role: "Digital Marketing Trainee",
+                date: "May 2025 – Oct 2025",
                 bullets: [
-                  "Conducted detailed client-side financial analyses, building predictive marketing models and optimizing investment structures.",
-                  "Analyzed conversion cost metrics across ad platforms, contributing to strategic adjustments that raised budget ROI by 15%.",
-                  "Prepared financial templates and dashboards for digital business audits, streamlining reporting operations by 20%."
+                  "Implemented AI-assisted SEO workflows, contributing to 40% increase in organic impressions through keyword clustering, meta optimization, and SERP alignment",
+                  "Analyzed Google Search Console + GA4 data to identify content gaps, improving CTR and session duration by 27%",
+                  "Supported backlink research & outreach, analyzing 50+ competitor link profiles to strengthen off-page SEO strategy",
+                  "Collaborated with design & content teams on SEO-driven UI/UX, resulting in 15% reduction in bounce rate"
                 ]
               },
               {
                 org: "Sharva Aikyam Foundation",
-                role: "Finance Intern",
-                date: "Mar 2022–Apr 2023",
+                role: "Social Media Head & Core Team Member",
+                date: "Nov 2023 – Apr 2024",
                 bullets: [
-                  "Supervised allocation tracking of program funding, preparing budgets and visual reports for administrative stakeholders.",
-                  "Coordinated with marketing teams to optimize promotional campaigns, driving an outreach increase of 35% through quantitative targeting.",
-                  "Developed cost-utility frameworks for ongoing charity campaigns, ensuring sustainable resource flow."
+                  "Led multi-platform social media across Instagram, Facebook, Twitter & LinkedIn, driving 35–45% growth in reach and engagement",
+                  "Created 100+ content assets, resulting in 2× engagement and 25% increase in volunteer participation",
+                  "Optimized campaigns using Instagram Insights, Meta Business Suite, Google Sheets & Excel, managing 1,000+ donor and campaign records"
                 ]
               }
             ].map((intern, idx) => (
@@ -526,27 +528,27 @@ export default function Home() {
             {[
               {
                 num: "01",
-                title: "Goibibo Flight Data Analysis",
-                type: "Finance & Data Analysis",
-                desc: "Processed passenger pricing datasets and route metrics using analytical models to optimize airline ticket pricing strategies and load yields."
+                title: "E-Commerce Project – Shopify Store & Meta Ads",
+                type: "Jan–Feb 2025",
+                desc: "Built and optimized a Shopify store (product listings, catalog structuring, storefront UX). Launched Meta Ads generating ₹7,385 in sales within one month."
               },
               {
                 num: "02",
-                title: "Alankrita Handcrafted Jewelry",
-                type: "₹51,644 revenue · 70.3% margin",
-                desc: "Launched a boutique e-commerce label. Engineered brand messaging, managed stock systems, and directed social ad models to secure high product margins."
+                title: "August Bioscience – Affiliate Marketing",
+                type: "Nov–Dec 2024",
+                desc: "Executed affiliate marketing campaigns via social media, email, influencer tie-ups, and paid promotions. Drove ₹5,000 in product sales and earned ₹1,000 commission."
               },
               {
                 num: "03",
-                title: "Eco Bites Edible Cutlery",
-                type: "Selected E-NNOVATE Poland 2025 · 30+ countries",
-                desc: "Strategic developer for sustainable cutlery initiatives. Structured market entry plans that received validation across international innovation councils."
+                title: "Unbrand to Brand – USHMR",
+                type: "Aug–Sept 2024",
+                desc: "Conducted business model analysis and built brand identity (logo & positioning). Achieved ₹10,000 in revenue across sourcing, branding, and sales."
               },
               {
                 num: "04",
-                title: "Shahi Adaa Shopify Brand",
-                type: "E-Commerce & Digital Marketing",
-                desc: "Curated apparel e-commerce operations. Built UI layouts, created digital content assets, and designed acquisition funnels using targeting algorithms."
+                title: "Alankrita – Handcrafted Jewelry Brand",
+                type: "Social media-driven marketing strategy, finance management, customer engagement",
+                desc: "Achieved ₹51,644 revenue with 70.3% profit margin."
               }
             ].map((proj, idx) => (
               <motion.div
@@ -661,40 +663,40 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               {
-                title: "1st Place Innovation Nation",
-                desc: "Won top honors at the Amazon Maveric innovation competition hosted at LPU.",
-                meta: "Dec 2024",
+                title: "1st Position & Most Innovative Entrepreneurship–Startup Award",
+                desc: "Innotek | LPU",
+                meta: "Apr 2025",
                 icon: "🥇"
               },
               {
-                title: "E-NNOVATE Summit Poland",
-                desc: "Venture selected for exhibition representing national scale on sustainable solutions.",
-                meta: "Jun 2025",
-                icon: "🌍"
-              },
-              {
-                title: "HULT Prize 2025",
-                desc: "Pitched venture architectures for social change, recognized as a regional candidate.",
-                meta: "Feb 2025",
-                icon: "🏆"
-              },
-              {
-                title: "SBI Youth Ideathon",
-                desc: "Placed in Top 1000 Innovators globally for high-concept green commerce.",
+                title: "Top 100 Student Innovations",
+                desc: "SBI College Youth Ideathon | IIT Delhi",
                 meta: "Mar 2025",
                 icon: "💡"
               },
               {
-                title: "Top 15 Zerodha Varsity Quiz",
-                desc: "Evaluated in top tier on finance theory, quantitative models, and market regulations.",
-                meta: "Jan 2025",
-                icon: "📊"
+                title: "Generated ₹11,900 revenue from live event with ₹1,500 investment",
+                desc: "Lovely Professional University (LPU)",
+                meta: "Feb 2025",
+                icon: "💰"
               },
               {
-                title: "Tourism Tapestry 3rd Place",
-                desc: "Secured third in strategic hospitality optimization models and logistics proposals.",
+                title: "2nd Runner-Up",
+                desc: "Tourism Tapestry | LPU",
                 meta: "Jan 2025",
                 icon: "🥉"
+              },
+              {
+                title: "1st Position – Innovation Nation",
+                desc: "Venture Capital Competition | LPU",
+                meta: "Dec 2024",
+                icon: "🥇"
+              },
+              {
+                title: "Selected Innovation Exhibitor",
+                desc: "E-NNOVATE International Summit, Poland",
+                meta: "Jun 2025",
+                icon: "🌍"
               }
             ].map((ach, idx) => (
               <div
@@ -748,7 +750,7 @@ export default function Home() {
               Email Me
             </a>
             <a
-              href="https://linkedin.com/in/rahulkumarrai"
+              href="https://www.linkedin.com/in/rahul-rai2003/"
               target="_blank"
               rel="noopener noreferrer"
               className="px-6 py-3.5 bg-zinc-900 border border-zinc-800 hover:border-zinc-700 hover:bg-zinc-800/70 rounded-lg font-bold text-xs md:text-sm uppercase tracking-wider flex items-center gap-2 transition-all duration-300"
