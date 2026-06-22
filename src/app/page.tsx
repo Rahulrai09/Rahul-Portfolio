@@ -229,23 +229,23 @@ export default function Home() {
           <div className="md:col-span-5 flex flex-col gap-6">
             <span className="text-xs uppercase tracking-widest text-acc font-semibold">About Me</span>
             <h2 className="text-3xl md:text-5xl font-syne font-bold leading-tight tracking-tight">
-              I thrive at the intersection of data, design, and decision-making.
+              I turn ideas into results — with strategy, creativity, and execution.
             </h2>
             <p className="text-zinc-400 text-sm md:text-base leading-relaxed mt-2">
-              Currently pursuing an MBA, I bridge the gap between creative execution and analytical logic. With practical experience in financial modeling, CRM automation, digital campaigns, and product validation, I create structures that solve business bottlenecks and maximize organizational growth.
+              MBA graduate in Digital Marketing & Finance from Lovely Professional University (CGPA 8.4). I specialize in SEO, performance marketing, social media, AI video creation, and website building. I&apos;ve driven 40% growth in organic impressions, generated ₹7,385 in Meta Ads sales in one month, and built brands from zero to revenue.
             </p>
           </div>
           
           <div className="md:col-span-7 flex flex-col gap-8">
             <p className="text-zinc-400 text-sm md:text-base leading-relaxed">
-              My journey centers around developing sustainable solutions. From analyzing passenger flight datasets to validate pricing models to launching an edible cutlery venture evaluated at international innovation summits, I aim to craft strategic digital programs backed by metrics. I am passionate about market strategy, digital growth frameworks, and data visual analytics.
+              From managing 1,000+ donor records at an NGO to running live SEO campaigns and Shopify stores — I bring hands-on digital marketing expertise. I also build websites that are fast, modern, and conversion-focused. Currently working full-time and open to freelance projects, brand collaborations, and consulting opportunities.
             </p>
             <div className="p-6 border-l-4 border-acc bg-acc/5 rounded-r-xl accent-glow flex flex-col gap-2">
               <span className="text-white font-bold text-sm md:text-base tracking-wide">
-                Currently open to full-time roles in Finance, Digital Marketing & Strategy
+                Open to Freelance · Brand Collaborations · Website Projects
               </span>
               <span className="text-zinc-400 text-xs md:text-sm">
-                Ready to contribute strategic depth and execute technical growth programs.
+                Digital Marketer · SEO Expert · Website Builder · AI Tools
               </span>
             </div>
           </div>
