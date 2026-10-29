@@ -3,61 +3,78 @@
 @tailwind utilities;
 
 :root {
-  --acc: #E8521A;
-  --bg: #0A0A0A;
-  --background: #0A0A0A;
-  --foreground: #ffffff;
+  --bg: #f7f7fb;
+  --ink: #0e1030;
+  --violet: #5b4bff;
+  --sky: #16b4f2;
+}
+
+html {
+  scroll-padding-top: 96px;
 }
 
 body {
-  background: #0A0A0A;
-  color: #fff;
-  font-family: var(--font-inter), sans-serif;
+  background: var(--bg);
+  color: var(--ink);
   overflow-x: hidden;
-  scroll-behavior: smooth;
 }
 
-/* Hide default cursor on desktop devices with hover support */
-@media (hover: hover) and (pointer: fine) {
-  body, a, button, select, input, textarea, [role="button"] {
-    cursor: none !important;
+::selection {
+  background: #5b4bff;
+  color: #fff;
+}
+
+@layer components {
+  .text-brand {
+    background: linear-gradient(100deg, #5b4bff 0%, #8b5cf6 45%, #16b4f2 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .bg-brand {
+    background: linear-gradient(110deg, #5b4bff 0%, #7c5cff 50%, #16b4f2 120%);
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-violet shadow-card;
+  }
+
+  .card {
+    @apply rounded-3xl border border-line bg-surface shadow-card;
+  }
+
+  .grid-bg {
+    background-image: linear-gradient(to right, rgba(14, 16, 48, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(14, 16, 48, 0.05) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000 40%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000 40%, transparent 100%);
   }
 }
 
-/* Custom Utilities */
-.glassmorphism {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.text-gradient {
-  background: linear-gradient(135deg, #fff 30%, #a3a3a3 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.accent-glow {
-  box-shadow: 0 0 40px -10px rgba(232, 82, 26, 0.35);
-}
-
-.accent-glow-hover:hover {
-  box-shadow: 0 0 30px -5px rgba(232, 82, 26, 0.45);
-  border-color: rgba(232, 82, 26, 0.6) !important;
-}
-
-/* Scrollbar styling */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #0A0A0A;
+  background: var(--bg);
 }
 ::-webkit-scrollbar-thumb {
-  background: #222;
-  border-radius: 4px;
+  background: #d8d9e8;
+  border-radius: 999px;
+  border: 2px solid var(--bg);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #E8521A;
+  background: #5b4bff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

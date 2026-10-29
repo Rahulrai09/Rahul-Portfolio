@@ -1,786 +1,746 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, useScroll, useMotionValueEvent } from "framer-motion";
+import { useEffect, useState } from "react";
+import { motion, useScroll, useSpring } from "framer-motion";
 
-// Helper components for icons to keep layout clean and modular
-function MailIcon() {
-  return (
-    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-    </svg>
-  );
-}
+/* ------------------------------------------------------------------ */
+/*  CONTENT — edit everything about the site from here                */
+/* ------------------------------------------------------------------ */
 
-function LinkedInIcon() {
-  return (
-    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-      <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-    </svg>
-  );
-}
-
-function PhoneIcon() {
-  return (
-    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 00.996.808H10a1 1 0 01.75.36l1.326 1.77a1 1 0 001.32.083l.8-2.2a1 1 0 01.94-.725H19a2 2 0 012 2v3.28a1 1 0 01-.725.94l-2.2.548a1 1 0 00-.808.996V14a1 1 0 01-.36.75l-1.77 1.326a1 1 0 00-.083 1.32l2.2.8a1 1 0 01.725.94V19a2 2 0 01-2 2h-3.28a1 1 0 01-.94-.725l-.548-2.2a1 1 0 00-.996-.808H14a1 1 0 01-.75-.36l-1.326-1.77a1 1 0 00-1.32-.083l-.8 2.2a1 1 0 01-.94.725H5a2 2 0 01-2-2v-3.28a1 1 0 01.725-.94l2.2-.548a1 1 0 00.808-.996V10a1 1 0 01.36-.75l1.77-1.326a1 1 0 00.083-1.32l-2.2-.8A1 1 0 013 5z" />
-    </svg>
-  );
-}
-
-// Fade-up animation properties for sections
-const sectionVariants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: { 
-    opacity: 1, 
-    y: 0,
-    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }
-  }
+const CONTACT = {
+  email: "rahulkumarrai.work@gmail.com",
+  phone: "+919876543210",
+  linkedin: "https://www.linkedin.com/in/rahul-rai2003/",
 };
 
+const NAV = ["about", "experience", "projects", "skills", "education", "awards"] as const;
+
+const ROLES = [
+  "Digital Marketer",
+  "SEO",
+  "Performance Marketing",
+  "AI Video Creation",
+  "Social Media",
+  "Website Building",
+  "AI Tools",
+];
+
+const STATS = [
+  { value: "40%", label: "Growth in organic impressions", tone: "violet" },
+  { value: "₹51K+", label: "Revenue from Alankrita venture", tone: "sky" },
+  { value: "70%", label: "Profit margin achieved", tone: "mint" },
+  { value: "6+", label: "Awards & recognitions", tone: "rose" },
+] as const;
+
+const EXPERIENCE = [
+  {
+    company: "MNR Solutions (TWEOV – Silver Brand)",
+    place: "Noida",
+    role: "Digital Marketing Trainee",
+    period: "May 2025 – Oct 2025",
+    points: [
+      "Implemented AI-assisted SEO workflows — keyword clustering, meta optimisation and SERP alignment — contributing to a 40% increase in organic impressions.",
+      "Analysed Google Search Console + GA4 data to find content gaps, improving CTR and session duration by 27%.",
+      "Researched 50+ competitor link profiles to strengthen backlink and off-page SEO strategy.",
+      "Worked with design & content teams on SEO-driven UI/UX, cutting bounce rate by 15%.",
+    ],
+    tags: ["SEO", "GA4", "Search Console", "UI/UX"],
+  },
+  {
+    company: "Sharva Aikyam Foundation",
+    place: "NGO",
+    role: "Social Media Head & Core Team Member",
+    period: "Nov 2023 – Apr 2024",
+    points: [
+      "Led social media across Instagram, Facebook, Twitter & LinkedIn, growing reach and engagement by 35–45%.",
+      "Created 100+ content assets, doubling engagement and lifting volunteer participation by 25%.",
+      "Optimised campaigns with Instagram Insights, Meta Business Suite, Sheets & Excel across 1,000+ donor records.",
+    ],
+    tags: ["Social Media", "Content", "Meta Suite"],
+  },
+];
+
+const PROJECTS = [
+  {
+    title: "Shopify Store & Meta Ads",
+    kind: "E-commerce",
+    period: "Jan – Feb 2025",
+    metric: "₹7,385",
+    metricLabel: "sales in month one",
+    desc: "Built and optimised a Shopify store — listings, catalogue structure and storefront UX — then launched Meta Ads campaigns that converted from week one.",
+    tone: "violet",
+  },
+  {
+    title: "Alankrita — Handcrafted Jewelry",
+    kind: "Own brand",
+    period: "Venture",
+    metric: "70.3%",
+    metricLabel: "profit margin on ₹51,644",
+    desc: "Social-media-led marketing strategy, finance management and customer engagement for a handcrafted jewelry brand.",
+    tone: "rose",
+  },
+  {
+    title: "Unbrand to Brand — USHMR",
+    kind: "Brand identity",
+    period: "Aug – Sept 2024",
+    metric: "₹10,000",
+    metricLabel: "revenue generated",
+    desc: "Business model analysis plus a full brand identity — logo and positioning — taken through sourcing, branding and sales.",
+    tone: "sky",
+  },
+  {
+    title: "August Bioscience",
+    kind: "Affiliate marketing",
+    period: "Nov – Dec 2024",
+    metric: "₹5,000",
+    metricLabel: "product sales driven",
+    desc: "Affiliate campaigns across social, email, influencer tie-ups and paid promotions — earning ₹1,000 in commission.",
+    tone: "mint",
+  },
+] as const;
+
+const SKILLS = [
+  { name: "Social Media Marketing", level: 85 },
+  { name: "Meta Ads Manager", level: 85 },
+  { name: "Google Ads / SEO", level: 82 },
+  { name: "Canva", level: 85 },
+  { name: "MS Excel", level: 85 },
+  { name: "MS PowerPoint", level: 85 },
+  { name: "Website Building", level: 75 },
+  { name: "Data Visualization", level: 75 },
+];
+
+const CAPABILITIES = [
+  "Leadership",
+  "Teamwork",
+  "Communication",
+  "Learning Agility",
+  "CRM Systems",
+  "Product Development",
+  "Practical Application",
+];
+
+const EDUCATION = [
+  {
+    degree: "MBA — Digital Marketing & Finance",
+    school: "Lovely Professional University",
+    period: "Aug 2024 – May 2026",
+    score: "CGPA 8.4",
+    note: "Venture models, business strategy and computational analytics.",
+  },
+  {
+    degree: "B.Com",
+    school: "Punjab University",
+    period: "Jul 2020 – Apr 2023",
+    score: "CGPA 7.1",
+    note: "Corporate accounting, financial systems, portfolio analytics and commerce regulation.",
+  },
+  {
+    degree: "Class 12th — Commerce",
+    school: "Kendriya Vidyalaya Ambala Cantt",
+    period: "2019 – 2020",
+    note: "Business fundamentals, economics and quantitative methods.",
+  },
+  {
+    degree: "Class 10th",
+    school: "Kendriya Vidyalaya Ambala Cantt",
+    period: "2017 – 2018",
+    note: "General science and humanities.",
+  },
+];
+
+const CERTIFICATIONS = [
+  { title: "Digital Marketing Mastery", issuer: "IIT Roorkee", date: "Feb 2025" },
+  { title: "SEBI Investor Certification — 46/50", issuer: "NISM", date: "Jan 2025" },
+  { title: "Data Visualization with Python", issuer: "IBM", date: "Dec 2024" },
+  { title: "Financial Markets & Investment Strategies", issuer: "Global Institutional Program", date: "Ongoing" },
+];
+
+const AWARDS = [
+  { icon: "🥇", title: "1st Position & Most Innovative Entrepreneurship–Startup Award", org: "Innotek, LPU", date: "Apr 2025" },
+  { icon: "🌍", title: "Selected Innovation Exhibitor", org: "E-NNOVATE International Summit, Poland", date: "Jun 2025" },
+  { icon: "💡", title: "Top 100 Student Innovations", org: "SBI College Youth Ideathon, IIT Delhi", date: "Mar 2025" },
+  { icon: "💰", title: "₹11,900 revenue from a live event on ₹1,500 investment", org: "Lovely Professional University", date: "Feb 2025" },
+  { icon: "🥉", title: "2nd Runner-Up", org: "Tourism Tapestry, LPU", date: "Jan 2025" },
+  { icon: "🏆", title: "1st Position — Innovation Nation", org: "Venture Capital Competition, LPU", date: "Dec 2024" },
+];
+
+/* ------------------------------------------------------------------ */
+/*  Helpers                                                            */
+/* ------------------------------------------------------------------ */
+
+const TONES = {
+  violet: { text: "text-violet", bg: "bg-violet-soft", bar: "bg-violet" },
+  sky: { text: "text-sky", bg: "bg-sky-soft", bar: "bg-sky" },
+  mint: { text: "text-mint", bg: "bg-mint-soft", bar: "bg-mint" },
+  rose: { text: "text-rose", bg: "bg-rose-soft", bar: "bg-rose" },
+} as const;
+
+const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
+
+function Reveal({
+  children,
+  delay = 0,
+  className = "",
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 28 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.7, delay, ease }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+function SectionHead({ eyebrow, title, accent, sub }: { eyebrow: string; title: string; accent: string; sub?: string }) {
+  return (
+    <Reveal className="mb-12 md:mb-16 max-w-3xl">
+      <span className="eyebrow">
+        <span className="h-1.5 w-1.5 rounded-full bg-violet" />
+        {eyebrow}
+      </span>
+      <h2 className="mt-5 font-display text-4xl md:text-6xl font-bold tracking-tight leading-[1.02]">
+        {title} <span className="font-serif italic font-normal text-brand">{accent}</span>
+      </h2>
+      {sub && <p className="mt-5 text-lg text-muted leading-relaxed">{sub}</p>}
+    </Reveal>
+  );
+}
+
+function Arrow({ className = "w-4 h-4" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M8 7h9v9" />
+    </svg>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Page                                                               */
+/* ------------------------------------------------------------------ */
+
 export default function Home() {
-  const { scrollY } = useScroll();
-  const [navHidden, setNavHidden] = useState(false);
-  const [activeSection, setActiveSection] = useState("about");
+  const [active, setActive] = useState<string>("about");
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
 
-  // Track scroll direction to show/hide navbar
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    const previous = scrollY.getPrevious() ?? 0;
-    if (latest > previous && latest > 120) {
-      setNavHidden(true);
-    } else {
-      setNavHidden(false);
-    }
-  });
-
-  // Simple section tracking for navigation highlight
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = ["about", "education", "skills", "experience", "projects", "awards"];
-      const scrollPosition = window.scrollY + window.innerHeight / 3;
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
 
-      for (const section of sections) {
-        const el = document.getElementById(section);
-        if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(section);
-            break;
-          }
-        }
-      }
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((e) => e.isIntersecting && setActive(e.target.id)),
+      { rootMargin: "-40% 0px -55% 0px" }
+    );
+    NAV.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      observer.disconnect();
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-bgDark text-white select-none selection:bg-acc selection:text-white font-sans overflow-x-hidden">
-      
-      {/* NAVBAR */}
-      <motion.nav
-        variants={{
-          visible: { y: 0 },
-          hidden: { y: "-100%" }
-        }}
-        animate={navHidden ? "hidden" : "visible"}
-        transition={{ duration: 0.35, ease: "easeInOut" }}
-        className="fixed top-0 left-0 w-full z-40 glassmorphism border-b border-white/5 py-4 px-6 md:px-12 flex justify-between items-center"
-      >
-        <a href="#" className="font-syne text-2xl font-extrabold text-white tracking-tighter">
-          RKR<span className="text-acc">.</span>
-        </a>
-        <div className="hidden md:flex gap-8 text-sm uppercase tracking-widest font-medium">
-          {["about", "education", "skills", "experience", "projects", "awards"].map((item) => (
-            <a
-              key={item}
-              href={`#${item}`}
-              className={`transition-colors duration-300 ${
-                activeSection === item ? "text-acc font-semibold" : "text-zinc-400 hover:text-white"
-              }`}
-            >
-              {item === "experience" ? "Experience" : item.charAt(0).toUpperCase() + item.slice(1)}
-            </a>
-          ))}
-        </div>
-        <div>
-          <a
-            href="#contact"
-            className="px-6 py-2.5 bg-acc hover:bg-opacity-90 rounded-full font-semibold tracking-wider text-xs md:text-sm uppercase transition-all duration-300 accent-glow-hover"
-          >
-            Hire Me
-          </a>
-        </div>
-      </motion.nav>
+    <div className="relative min-h-screen overflow-x-hidden">
+      {/* scroll progress */}
+      <motion.div style={{ scaleX: progress }} className="fixed inset-x-0 top-0 z-50 h-[3px] origin-left bg-brand" />
 
-      {/* HERO SECTION */}
-      <section className="relative min-h-screen w-full flex flex-col justify-center items-center px-6 md:px-12 pt-20">
-        <div className="w-full max-w-7xl mx-auto flex flex-col justify-center items-start h-full">
-          
-          {/* Animated Headline */}
-          <motion.div
-            variants={{
-              hidden: {},
-              visible: {
-                transition: { staggerChildren: 0.15 }
-              }
-            }}
-            initial="hidden"
-            animate="visible"
-            className="w-full"
-          >
-            <h1 className="text-5xl md:text-8xl lg:text-9xl font-syne font-extrabold tracking-tighter text-left leading-none uppercase">
-              {["RAHUL", "KUMAR", "RAI"].map((word, idx) => (
-                <motion.span
-                  key={idx}
-                  className="inline-block mr-4 md:mr-8 text-gradient"
-                  variants={{
-                    hidden: { opacity: 0, y: 80 },
-                    visible: {
-                      opacity: 1,
-                      y: 0,
-                      transition: { duration: 0.85, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }
-                    }
-                  }}
-                >
-                  {word}
-                </motion.span>
-              ))}
-            </h1>
-          </motion.div>
-
-          {/* Subtext and pulsating dot */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.8 }}
-            className="flex items-center gap-3 mt-6 md:mt-8"
-          >
-            <span className="relative flex h-3.5 w-3.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-acc opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-acc"></span>
+      {/* ============================== NAV ============================== */}
+      <header className="fixed inset-x-0 top-0 z-40 px-4 pt-4">
+        <nav
+          className={`mx-auto flex max-w-6xl items-center justify-between rounded-full border px-4 py-2.5 md:px-6 transition-all duration-500 ${
+            scrolled ? "border-line bg-white/80 shadow-card backdrop-blur-xl" : "border-transparent bg-transparent"
+          }`}
+        >
+          <a href="#top" className="flex items-center gap-2.5" aria-label="Home">
+            <span className="grid h-9 w-9 place-items-center rounded-full bg-brand font-display text-sm font-bold text-white shadow-glow">
+              RK
             </span>
-            <p className="text-zinc-400 text-sm md:text-xl font-medium tracking-wide">
-              Digital Marketer <span className="text-zinc-600">·</span> SEO <span className="text-zinc-600">·</span> Performance Marketing <span className="text-zinc-600">·</span> AI Video Creation <span className="text-zinc-600">·</span> Social Media <span className="text-zinc-600">·</span> Website Building <span className="text-zinc-600">·</span> AI Tools
-            </p>
-          </motion.div>
+            <span className="hidden sm:block font-display font-semibold tracking-tight">Rahul Kumar Rai</span>
+          </a>
 
-          {/* CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1, duration: 0.8 }}
-            className="flex gap-4 mt-8 md:mt-12"
-          >
+          <div className="hidden lg:flex items-center gap-1 rounded-full bg-bg/70 p-1">
+            {NAV.map((id) => (
+              <a
+                key={id}
+                href={`#${id}`}
+                className={`relative rounded-full px-4 py-2 text-sm font-medium capitalize transition-colors ${
+                  active === id ? "text-white" : "text-muted hover:text-ink"
+                }`}
+              >
+                {active === id && (
+                  <motion.span layoutId="nav-pill" className="absolute inset-0 rounded-full bg-ink" transition={{ type: "spring", stiffness: 400, damping: 34 }} />
+                )}
+                <span className="relative">{id}</span>
+              </a>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-2">
             <a
               href="#contact"
-              className="px-8 py-3.5 bg-acc hover:bg-opacity-90 rounded-lg font-bold tracking-wider text-xs md:text-sm uppercase transition-all duration-300 accent-glow"
+              className="group inline-flex items-center gap-1.5 rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white shadow-glow transition-transform hover:-translate-y-0.5"
             >
-              Let&apos;s Talk &rarr;
+              Hire me <Arrow className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </a>
-            <a
-              href="#projects"
-              className="px-8 py-3.5 border border-white/20 hover:border-white/40 hover:bg-white/5 rounded-lg font-bold tracking-wider text-xs md:text-sm uppercase transition-all duration-300"
+            <button
+              onClick={() => setMenuOpen((v) => !v)}
+              className="lg:hidden grid h-10 w-10 place-items-center rounded-full border border-line bg-white"
+              aria-label="Toggle menu"
+              aria-expanded={menuOpen}
             >
-              View Work
-            </a>
+              <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                {menuOpen ? <path strokeLinecap="round" d="M6 6l12 12M18 6L6 18" /> : <path strokeLinecap="round" d="M4 7h16M4 12h16M4 17h16" />}
+              </svg>
+            </button>
+          </div>
+        </nav>
+
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="lg:hidden mx-auto mt-2 max-w-6xl rounded-3xl border border-line bg-white p-3 shadow-lift"
+          >
+            {NAV.map((id) => (
+              <a
+                key={id}
+                href={`#${id}`}
+                onClick={() => setMenuOpen(false)}
+                className="block rounded-2xl px-4 py-3 font-medium capitalize text-ink hover:bg-violet-soft"
+              >
+                {id}
+              </a>
+            ))}
+          </motion.div>
+        )}
+      </header>
+
+      {/* ============================== HERO ============================== */}
+      <section id="top" className="relative px-5 pt-32 md:pt-40 pb-20">
+        {/* ambient colour */}
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+          <div className="grid-bg absolute inset-0" />
+          <div className="absolute -top-32 left-[8%] h-[480px] w-[480px] rounded-full bg-violet/25 blur-[120px]" />
+          <div className="absolute top-10 right-[4%] h-[420px] w-[420px] rounded-full bg-sky/25 blur-[120px]" />
+          <div className="absolute top-[420px] left-[40%] h-[320px] w-[320px] rounded-full bg-rose/15 blur-[120px]" />
+        </div>
+
+        <div className="mx-auto max-w-6xl">
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease }}>
+            <span className="inline-flex items-center gap-2 rounded-full border border-line bg-white/80 px-4 py-1.5 text-sm font-medium text-muted shadow-card backdrop-blur">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-mint opacity-70" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-mint" />
+              </span>
+              Available for freelance & collaborations
+            </span>
           </motion.div>
 
-          {/* Stats Grid - 2x2 layout */}
-          <motion.div
-            initial={{ opacity: 0, y: 35 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.2, duration: 0.8 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mt-16 md:mt-24 w-full"
-          >
-            {[
-              { val: "4+ Ventures", label: "Business Initiatives" },
-              { val: "30+ Countries", label: "Global Reach" },
-              { val: "70% Profit Margin", label: "Eco-Bites Venture" },
-              { val: "6+ Awards", label: "International Recognition" }
-            ].map((stat, i) => (
-              <div
-                key={i}
-                className="glassmorphism p-6 rounded-2xl flex flex-col justify-between border-white/5 hover:border-acc/20 transition-colors duration-500"
+          <h1 className="mt-8 font-display text-[3.4rem] leading-[0.95] sm:text-7xl md:text-8xl lg:text-[8.5rem] font-extrabold tracking-[-0.04em]">
+            {["Rahul", "Kumar Rai"].map((w, i) => (
+              <motion.span
+                key={w}
+                className="block"
+                initial={{ opacity: 0, y: 60 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.9, delay: 0.1 + i * 0.12, ease }}
               >
-                <span className="font-syne text-2xl md:text-4xl font-extrabold text-acc tracking-tight block">
-                  {stat.val}
-                </span>
-                <span className="text-zinc-500 text-xs md:text-sm font-medium tracking-wide mt-2 block">
-                  {stat.label}
-                </span>
+                {i === 1 ? <span className="text-brand">{w}</span> : w}
+              </motion.span>
+            ))}
+          </h1>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.45, ease }}
+            className="mt-8 grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-end"
+          >
+            <div>
+              <p className="max-w-xl text-xl md:text-2xl leading-snug text-ink/80">
+                I turn ideas into <span className="font-serif italic text-violet text-[1.15em]">results</span> — with SEO, performance
+                marketing and websites built to convert.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a
+                  href="#contact"
+                  className="group inline-flex items-center gap-2 rounded-full bg-ink px-7 py-4 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:shadow-lift"
+                >
+                  Let&apos;s talk <Arrow className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </a>
+                <a
+                  href="#projects"
+                  className="inline-flex items-center gap-2 rounded-full border border-line bg-white px-7 py-4 text-sm font-semibold text-ink shadow-card transition-all hover:-translate-y-0.5 hover:border-violet/40"
+                >
+                  View my work
+                </a>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-2 md:justify-end">
+              {ROLES.map((r, i) => {
+                const tone = TONES[(["violet", "sky", "mint", "rose"] as const)[i % 4]];
+                return (
+                  <span key={r} className={`rounded-full ${tone.bg} ${tone.text} px-3.5 py-1.5 text-sm font-semibold`}>
+                    {r}
+                  </span>
+                );
+              })}
+            </div>
+          </motion.div>
+
+          {/* stats */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.65, ease }}
+            className="mt-16 md:mt-20 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4"
+          >
+            {STATS.map((s) => (
+              <div key={s.label} className="card group p-5 md:p-6 transition-all hover:-translate-y-1 hover:shadow-lift">
+                <div className={`font-display text-3xl md:text-5xl font-bold tracking-tight ${TONES[s.tone].text}`}>{s.value}</div>
+                <div className="mt-2 text-sm text-muted leading-snug">{s.label}</div>
               </div>
             ))}
           </motion.div>
         </div>
       </section>
 
-      {/* ABOUT SECTION */}
-      <motion.section
-        id="about"
-        variants={sectionVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        className="w-full py-24 md:py-32 px-6 md:px-12 border-t border-white/5"
-      >
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16 items-start">
-          <div className="md:col-span-5 flex flex-col gap-6">
-            <span className="text-xs uppercase tracking-widest text-acc font-semibold">About Me</span>
-            <h2 className="text-3xl md:text-5xl font-syne font-bold leading-tight tracking-tight">
-              I turn ideas into results — with strategy, creativity, and execution.
-            </h2>
-            <p className="text-zinc-400 text-sm md:text-base leading-relaxed mt-2">
-              MBA graduate in Digital Marketing & Finance from Lovely Professional University (CGPA 8.4). I specialize in SEO, performance marketing, social media, AI video creation, and website building. I&apos;ve driven 40% growth in organic impressions, generated ₹7,385 in Meta Ads sales in one month, and built brands from zero to revenue.
-            </p>
-          </div>
-          
-          <div className="md:col-span-7 flex flex-col gap-8">
-            <p className="text-zinc-400 text-sm md:text-base leading-relaxed">
-              From managing 1,000+ donor records at an NGO to running live SEO campaigns and Shopify stores — I bring hands-on digital marketing expertise. I also build websites that are fast, modern, and conversion-focused. Currently working full-time and open to freelance projects, brand collaborations, and consulting opportunities.
-            </p>
-            <div className="p-6 border-l-4 border-acc bg-acc/5 rounded-r-xl accent-glow flex flex-col gap-2">
-              <span className="text-white font-bold text-sm md:text-base tracking-wide">
-                Open to Freelance · Brand Collaborations · Website Projects
+      {/* marquee */}
+      <div className="relative border-y border-line bg-white py-5 overflow-hidden" aria-hidden>
+        <div className="flex w-max animate-marquee gap-10 whitespace-nowrap font-display text-2xl md:text-3xl font-semibold tracking-tight">
+          {[...Array(2)].flatMap((_, k) =>
+            ["SEO", "Meta Ads", "Google Ads", "Shopify", "Content Strategy", "AI Video", "Web Design", "Analytics", "Branding"].map((t, i) => (
+              <span key={`${k}-${t}`} className="flex items-center gap-10">
+                <span className={i % 2 ? "text-ink" : "font-serif italic font-normal text-brand"}>{t}</span>
+                <span className="text-violet/40">✦</span>
               </span>
-              <span className="text-zinc-400 text-xs md:text-sm">
-                Digital Marketer · SEO Expert · Website Builder · AI Tools
-              </span>
-            </div>
-          </div>
+            ))
+          )}
         </div>
-      </motion.section>
+      </div>
 
-      {/* EDUCATION TIMELINE */}
-      <motion.section
-        id="education"
-        variants={sectionVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        className="w-full py-24 md:py-32 px-6 md:px-12 bg-white/[0.01] border-t border-white/5"
-      >
-        <div className="max-w-4xl mx-auto">
-          <div className="flex flex-col gap-4 mb-16 text-center">
-            <span className="text-xs uppercase tracking-widest text-acc font-semibold">Timeline</span>
-            <h2 className="text-3xl md:text-5xl font-syne font-bold tracking-tight">Education</h2>
-          </div>
+      {/* ============================== ABOUT ============================== */}
+      <section id="about" className="px-5 py-24 md:py-32">
+        <div className="mx-auto max-w-6xl grid gap-12 md:grid-cols-[1fr_1.15fr] md:gap-16">
+          <Reveal>
+            <span className="eyebrow">
+              <span className="h-1.5 w-1.5 rounded-full bg-violet" /> About me
+            </span>
+            <h2 className="mt-5 font-display text-4xl md:text-6xl font-bold tracking-tight leading-[1.02]">
+              Strategy, creativity <span className="font-serif italic font-normal text-brand">& execution.</span>
+            </h2>
 
-          <div className="relative border-l border-zinc-800 ml-4 md:ml-32">
-            {[
-              {
-                title: "MBA – Digital Marketing & Finance",
-                inst: "Lovely Professional University",
-                date: "Aug 2024–May 2026",
-                desc: "Engaging in venture models, business strategies, and computational analytics.",
-                badge: "CGPA: 8.4"
-              },
-              {
-                title: "B.Com",
-                inst: "Punjab University",
-                date: "Jul 2020–Apr 2023",
-                desc: "Foundation in corporate accounting, financial systems, portfolio analytics, and commerce regulations.",
-                badge: "CGPA: 7.1"
-              },
-              {
-                title: "Class 12th",
-                inst: "Kendriya Vidyalaya Ambala Cantt",
-                date: "2019–2020",
-                desc: "Commerce stream, focused on business fundamentals, economics, and quantitative methodology."
-              },
-              {
-                title: "Class 10th",
-                inst: "Kendriya Vidyalaya Ambala Cantt",
-                date: "2017–2018",
-                desc: "General science and humanities curricula, developing core logical and analytical capacities."
-              }
-            ].map((edu, idx) => (
-              <div key={idx} className="relative mb-12 pl-8 md:pl-12 group">
-                {/* Timeline Node Dot */}
-                <div className="absolute -left-[6px] top-1.5 w-3 h-3 rounded-full bg-zinc-800 group-hover:bg-acc group-hover:scale-125 border border-bgDark transition-all duration-300" />
-                
-                {/* Float Date for Large Screen */}
-                <div className="hidden md:block absolute -left-36 top-1 text-zinc-500 font-syne font-bold text-sm tracking-wide text-right w-24">
-                  {edu.date}
-                </div>
-
-                <div className="glassmorphism p-6 rounded-2xl border-white/5 group-hover:border-acc/25 transition-all duration-500 hover:shadow-[0_10px_30px_-15px_rgba(232,82,26,0.15)]">
-                  <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-                    <h3 className="font-syne text-lg md:text-xl font-bold text-white group-hover:text-acc transition-colors duration-300">
-                      {edu.title}
-                    </h3>
-                    <span className="md:hidden text-acc text-xs font-semibold tracking-wider">
-                      {edu.date}
-                    </span>
-                    {edu.badge && (
-                      <span className="px-3 py-1 bg-acc/10 text-acc text-[10px] uppercase font-bold tracking-widest rounded-full border border-acc/20">
-                        {edu.badge}
-                      </span>
-                    )}
-                  </div>
-                  <h4 className="text-zinc-300 text-sm md:text-base font-medium mb-3">{edu.inst}</h4>
-                  <p className="text-zinc-500 text-xs md:text-sm leading-relaxed">{edu.desc}</p>
+            <div className="mt-10 card relative overflow-hidden p-7">
+              <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-brand opacity-20 blur-2xl" />
+              <div className="flex items-center gap-4">
+                <div className="grid h-16 w-16 place-items-center rounded-2xl bg-brand font-display text-2xl font-bold text-white shadow-glow">RK</div>
+                <div>
+                  <div className="font-display text-xl font-semibold">Rahul Kumar Rai</div>
+                  <div className="text-sm text-muted">MBA · Digital Marketing & Finance</div>
                 </div>
               </div>
+              <div className="mt-6 grid grid-cols-2 gap-3 text-sm">
+                <div className="rounded-2xl bg-bg p-4">
+                  <div className="text-muted">Education</div>
+                  <div className="mt-1 font-semibold">LPU · CGPA 8.4</div>
+                </div>
+                <div className="rounded-2xl bg-bg p-4">
+                  <div className="text-muted">Status</div>
+                  <div className="mt-1 font-semibold text-mint">Open to work</div>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.1} className="md:pt-16">
+            <p className="text-xl md:text-2xl leading-relaxed text-ink">
+              MBA graduate in Digital Marketing & Finance from Lovely Professional University. I specialise in{" "}
+              <span className="font-semibold text-violet">SEO</span>, <span className="font-semibold text-sky">performance marketing</span>,{" "}
+              <span className="font-semibold text-rose">social media</span>, AI video creation and website building.
+            </p>
+            <p className="mt-6 text-lg leading-relaxed text-muted">
+              I&apos;ve driven 40% growth in organic impressions, generated ₹7,385 in Meta Ads sales in a single month, and built brands from zero to
+              revenue. From managing 1,000+ donor records at an NGO to running live SEO campaigns and Shopify stores, I bring hands-on expertise —
+              and I build websites that are fast, modern and conversion-focused.
+            </p>
+            <p className="mt-6 text-lg leading-relaxed text-muted">
+              Currently working full-time and open to freelance projects, brand collaborations and consulting.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-2">
+              {["Freelance", "Brand collaborations", "Website projects", "Consulting"].map((t) => (
+                <span key={t} className="rounded-full border border-line bg-white px-4 py-2 text-sm font-medium">
+                  {t}
+                </span>
+              ))}
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ============================== EXPERIENCE ============================== */}
+      <section id="experience" className="px-5 py-24 md:py-32 bg-white border-y border-line">
+        <div className="mx-auto max-w-6xl">
+          <SectionHead eyebrow="Experience" title="Where I've" accent="made an impact." />
+          <div className="grid gap-6">
+            {EXPERIENCE.map((job, i) => (
+              <Reveal key={job.company} delay={i * 0.08}>
+                <article className="group grid gap-6 rounded-3xl border border-line bg-bg/60 p-7 md:p-10 md:grid-cols-[1fr_2fr] transition-all hover:bg-white hover:shadow-lift">
+                  <div>
+                    <div className="text-sm font-semibold text-violet">{job.period}</div>
+                    <h3 className="mt-3 font-display text-2xl md:text-3xl font-bold tracking-tight">{job.role}</h3>
+                    <div className="mt-2 text-muted">
+                      {job.company} · {job.place}
+                    </div>
+                    <div className="mt-5 flex flex-wrap gap-2">
+                      {job.tags.map((t) => (
+                        <span key={t} className="rounded-full bg-violet-soft px-3 py-1 text-xs font-semibold text-violet">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <ul className="space-y-4">
+                    {job.points.map((p) => (
+                      <li key={p} className="flex gap-3 text-[17px] leading-relaxed text-ink/80">
+                        <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand" />
+                        {p}
+                      </li>
+                    ))}
+                  </ul>
+                </article>
+              </Reveal>
             ))}
           </div>
         </div>
-      </motion.section>
+      </section>
 
-      {/* SKILLS SECTION */}
-      <motion.section
-        id="skills"
-        variants={sectionVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        className="w-full py-24 md:py-32 px-6 md:px-12 border-t border-white/5"
-      >
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col gap-4 mb-16 text-center">
-            <span className="text-xs uppercase tracking-widest text-acc font-semibold">Competence</span>
-            <h2 className="text-3xl md:text-5xl font-syne font-bold tracking-tight">Skills & Tools</h2>
-          </div>
-
-          {/* Hard Skills - Animated Rings */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8 mb-20">
-            {[
-              { name: "Canva", val: 85 },
-              { name: "MS Excel", val: 85 },
-              { name: "MS PowerPoint", val: 85 },
-              { name: "Website Building", val: 75 },
-              { name: "Meta Ads Manager", val: 85 },
-              { name: "Google Ads / SEO", val: 82 },
-              { name: "Data Visualization", val: 75 },
-              { name: "Social Media Marketing", val: 85 }
-            ].map((skill, idx) => {
-              const radius = 32;
-              const circ = 2 * Math.PI * radius;
-              const offset = circ - (skill.val / 100) * circ;
-
+      {/* ============================== PROJECTS ============================== */}
+      <section id="projects" className="px-5 py-24 md:py-32">
+        <div className="mx-auto max-w-6xl">
+          <SectionHead
+            eyebrow="Selected work"
+            title="Projects with"
+            accent="real numbers."
+            sub="Live ventures and campaigns — each one measured in revenue, not just reach."
+          />
+          <div className="grid gap-5 md:grid-cols-2">
+            {PROJECTS.map((p, i) => {
+              const t = TONES[p.tone];
               return (
-                <div
-                  key={idx}
-                  className="glassmorphism p-6 rounded-2xl border-white/5 flex flex-col items-center justify-center text-center hover:border-acc/20 transition-colors duration-500"
-                >
-                  <div className="relative w-20 h-20 flex items-center justify-center mb-4">
-                    <svg className="w-full h-full transform -rotate-90">
-                      {/* Background circle */}
-                      <circle
-                        cx="40"
-                        cy="40"
-                        r={radius}
-                        stroke="#1f1f23"
-                        strokeWidth="5"
-                        fill="transparent"
-                      />
-                      {/* Animated foreground progress circle */}
-                      <motion.circle
-                        cx="40"
-                        cy="40"
-                        r={radius}
-                        stroke="#E8521A"
-                        strokeWidth="5"
-                        fill="transparent"
-                        strokeDasharray={circ}
-                        initial={{ strokeDashoffset: circ }}
-                        whileInView={{ strokeDashoffset: offset }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1.5, ease: "easeOut" }}
-                      />
-                    </svg>
-                    <span className="absolute font-syne text-sm font-extrabold text-white">
-                      {skill.val}%
-                    </span>
-                  </div>
-                  <span className="font-syne text-xs md:text-sm font-semibold tracking-wide text-zinc-300">
-                    {skill.name}
-                  </span>
-                </div>
+                <Reveal key={p.title} delay={(i % 2) * 0.08}>
+                  <article className="card group relative h-full overflow-hidden p-7 md:p-9 transition-all duration-300 hover:-translate-y-1 hover:shadow-lift">
+                    <div className={`absolute -right-16 -top-16 h-48 w-48 rounded-full ${t.bg} transition-transform duration-500 group-hover:scale-125`} />
+                    <div className="relative">
+                      <div className="flex items-center justify-between">
+                        <span className={`rounded-full ${t.bg} ${t.text} px-3 py-1 text-xs font-bold uppercase tracking-wider`}>{p.kind}</span>
+                        <span className="text-sm text-muted">{p.period}</span>
+                      </div>
+                      <div className={`mt-10 font-display text-5xl md:text-6xl font-bold tracking-tight ${t.text}`}>{p.metric}</div>
+                      <div className="mt-1 text-sm font-medium text-muted">{p.metricLabel}</div>
+                      <h3 className="mt-8 font-display text-2xl font-bold tracking-tight">{p.title}</h3>
+                      <p className="mt-3 leading-relaxed text-muted">{p.desc}</p>
+                    </div>
+                  </article>
+                </Reveal>
               );
             })}
           </div>
+        </div>
+      </section>
 
-          {/* Soft Skills - Pip dot indicators */}
-          <div className="max-w-3xl mx-auto">
-            <h3 className="font-syne text-lg md:text-xl font-bold text-center text-zinc-400 mb-8 uppercase tracking-widest">
-              Core Capabilities
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-              {[
-                { name: "Leadership", rate: 5 },
-                { name: "Teamwork", rate: 5 },
-                { name: "Communication", rate: 4 },
-                { name: "Learning Agility", rate: 4 },
-                { name: "CRM Systems", rate: 4 },
-                { name: "Product Development", rate: 4 }
-              ].map((soft, idx) => (
-                <div
-                  key={idx}
-                  className="glassmorphism p-5 rounded-xl border-white/5 flex justify-between items-center"
-                >
-                  <span className="text-zinc-300 text-xs md:text-sm font-semibold tracking-wide">
-                    {soft.name}
-                  </span>
-                  <div className="flex gap-1.5">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <div
-                        key={i}
-                        className={`w-2.5 h-2.5 rounded-full transition-colors duration-500 ${
-                          i < soft.rate ? "bg-acc accent-glow" : "bg-zinc-800"
-                        }`}
-                      />
-                    ))}
-                  </div>
+      {/* ============================== SKILLS ============================== */}
+      <section id="skills" className="px-5 py-24 md:py-32 bg-white border-y border-line">
+        <div className="mx-auto max-w-6xl">
+          <SectionHead eyebrow="Skills & tools" title="The toolkit" accent="behind the work." />
+          <div className="grid gap-6 md:grid-cols-[1.4fr_1fr]">
+            <Reveal className="card bg-bg/60 p-7 md:p-9">
+              <div className="grid gap-x-10 gap-y-7 sm:grid-cols-2">
+                {SKILLS.map((s, i) => {
+                  const t = TONES[(["violet", "sky", "mint", "rose"] as const)[i % 4]];
+                  return (
+                    <div key={s.name}>
+                      <div className="flex items-baseline justify-between">
+                        <span className="font-semibold">{s.name}</span>
+                        <span className={`text-sm font-bold ${t.text}`}>{s.level}%</span>
+                      </div>
+                      <div className="mt-3 h-2 overflow-hidden rounded-full bg-line">
+                        <motion.div
+                          className={`h-full rounded-full ${t.bar}`}
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${s.level}%` }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 1.2, delay: 0.1 + i * 0.05, ease }}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </Reveal>
+            <Reveal delay={0.1} className="relative overflow-hidden rounded-3xl bg-ink p-7 md:p-9 text-white">
+              <div className="absolute -bottom-20 -right-20 h-64 w-64 rounded-full bg-violet/50 blur-3xl" />
+              <div className="absolute -top-16 -left-10 h-48 w-48 rounded-full bg-sky/30 blur-3xl" />
+              <div className="relative">
+                <h3 className="font-display text-2xl font-bold">Core capabilities</h3>
+                <p className="mt-2 text-white/60">What I bring to every team.</p>
+                <div className="mt-8 flex flex-wrap gap-2.5">
+                  {CAPABILITIES.map((c) => (
+                    <span key={c} className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-medium backdrop-blur">
+                      {c}
+                    </span>
+                  ))}
                 </div>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================== EDUCATION + CERTS ============================== */}
+      <section id="education" className="px-5 py-24 md:py-32">
+        <div className="mx-auto max-w-6xl">
+          <SectionHead eyebrow="Education" title="Learning that" accent="compounds." />
+          <div className="grid gap-12 md:grid-cols-2">
+            <ol className="relative border-l-2 border-line pl-8 space-y-10">
+              {EDUCATION.map((e, i) => (
+                <Reveal key={e.degree} delay={i * 0.06}>
+                  <li className="relative">
+                    <span className={`absolute -left-[41px] top-1 h-4 w-4 rounded-full border-4 border-bg ${i === 0 ? "bg-violet" : "bg-sky"}`} />
+                    <div className="text-sm font-semibold text-violet">{e.period}</div>
+                    <h3 className="mt-1 font-display text-xl md:text-2xl font-bold tracking-tight">{e.degree}</h3>
+                    <div className="mt-1 text-muted">
+                      {e.school}
+                      {e.score && <span className="ml-2 rounded-full bg-mint-soft px-2.5 py-0.5 text-xs font-bold text-mint">{e.score}</span>}
+                    </div>
+                    <p className="mt-2 text-muted/90 text-[15px]">{e.note}</p>
+                  </li>
+                </Reveal>
               ))}
+            </ol>
+
+            <div>
+              <Reveal>
+                <h3 className="font-display text-2xl font-bold tracking-tight">Certifications</h3>
+              </Reveal>
+              <div className="mt-6 grid gap-3">
+                {CERTIFICATIONS.map((c, i) => (
+                  <Reveal key={c.title} delay={i * 0.06}>
+                    <div className="card flex items-center gap-4 p-5 transition-all hover:-translate-y-0.5 hover:shadow-lift">
+                      <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-violet-soft text-violet">
+                        <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.6-4.1A12 12 0 0112 3a12 12 0 01-8.6 2.9A12 12 0 003 9c0 5.6 3.8 10.3 9 11.6 5.2-1.3 9-6 9-11.6 0-1-.1-2.1-.4-3.1z" />
+                        </svg>
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <div className="font-semibold leading-snug">{c.title}</div>
+                        <div className="text-sm text-muted">{c.issuer}</div>
+                      </div>
+                      <span className="shrink-0 text-xs font-semibold text-muted">{c.date}</span>
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
             </div>
           </div>
         </div>
-      </motion.section>
+      </section>
 
-      {/* INTERNSHIPS (EXPERIENCE) */}
-      <motion.section
-        id="experience"
-        variants={sectionVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        className="w-full py-24 md:py-32 px-6 md:px-12 bg-white/[0.01] border-t border-white/5"
-      >
-        <div className="max-w-5xl mx-auto">
-          <div className="flex flex-col gap-4 mb-16 text-center">
-            <span className="text-xs uppercase tracking-widest text-acc font-semibold">Practical Application</span>
-            <h2 className="text-3xl md:text-5xl font-syne font-bold tracking-tight">Internships</h2>
-          </div>
-
-          <div className="flex flex-col gap-8">
-            {[
-              {
-                org: "MNR Solutions (TWEOV – Silver Brand) | Noida",
-                role: "Digital Marketing Trainee",
-                date: "May 2025 – Oct 2025",
-                bullets: [
-                  "Implemented AI-assisted SEO workflows, contributing to 40% increase in organic impressions through keyword clustering, meta optimization, and SERP alignment",
-                  "Analyzed Google Search Console + GA4 data to identify content gaps, improving CTR and session duration by 27%",
-                  "Supported backlink research & outreach, analyzing 50+ competitor link profiles to strengthen off-page SEO strategy",
-                  "Collaborated with design & content teams on SEO-driven UI/UX, resulting in 15% reduction in bounce rate"
-                ]
-              },
-              {
-                org: "Sharva Aikyam Foundation",
-                role: "Social Media Head & Core Team Member",
-                date: "Nov 2023 – Apr 2024",
-                bullets: [
-                  "Led multi-platform social media across Instagram, Facebook, Twitter & LinkedIn, driving 35–45% growth in reach and engagement",
-                  "Created 100+ content assets, resulting in 2× engagement and 25% increase in volunteer participation",
-                  "Optimized campaigns using Instagram Insights, Meta Business Suite, Google Sheets & Excel, managing 1,000+ donor and campaign records"
-                ]
-              }
-            ].map((intern, idx) => (
-              <div
-                key={idx}
-                className="group border-l-4 border-acc/40 hover:border-acc bg-white/[0.02] p-8 rounded-r-2xl border-y border-r border-white/5 transition-all duration-500 hover:shadow-[0_15px_40px_-20px_rgba(232,82,26,0.2)] accent-glow-hover"
-              >
-                <div className="flex flex-wrap justify-between items-start gap-2 mb-4">
-                  <div>
-                    <h3 className="font-syne text-lg md:text-xl font-bold text-white group-hover:text-acc transition-colors duration-300">
-                      {intern.org}
-                    </h3>
-                    <span className="text-zinc-400 text-xs md:text-sm font-semibold tracking-wide block mt-1">
-                      {intern.role}
+      {/* ============================== AWARDS ============================== */}
+      <section id="awards" className="px-5 py-24 md:py-32 bg-white border-y border-line">
+        <div className="mx-auto max-w-6xl">
+          <SectionHead eyebrow="Achievements" title="Recognised for" accent="innovation." />
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {AWARDS.map((a, i) => (
+              <Reveal key={a.title} delay={(i % 3) * 0.06}>
+                <div className="group h-full rounded-3xl border border-line bg-bg/60 p-7 transition-all hover:-translate-y-1 hover:bg-white hover:shadow-lift">
+                  <div className="flex items-start justify-between">
+                    <span className="grid h-14 w-14 place-items-center rounded-2xl bg-white text-3xl shadow-card transition-transform group-hover:scale-110 group-hover:-rotate-6">
+                      {a.icon}
                     </span>
+                    <span className="text-xs font-semibold text-muted">{a.date}</span>
                   </div>
-                  <span className="px-4 py-1.5 bg-zinc-900 border border-zinc-800 text-zinc-400 rounded-full text-xs font-bold tracking-wide uppercase">
-                    {intern.date}
-                  </span>
+                  <h3 className="mt-6 font-display text-lg font-bold leading-snug">{a.title}</h3>
+                  <p className="mt-2 text-sm text-muted">{a.org}</p>
                 </div>
-                <ul className="list-disc list-outside pl-4 space-y-2 text-zinc-500 text-xs md:text-sm leading-relaxed">
-                  {intern.bullets.map((b, i) => (
-                    <li key={i} className="hover:text-zinc-300 transition-colors duration-300">
-                      {b}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
-      </motion.section>
+      </section>
 
-      {/* PROJECTS SECTION */}
-      <motion.section
-        id="projects"
-        variants={sectionVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        className="w-full py-24 md:py-32 px-6 md:px-12 border-t border-white/5"
-      >
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col gap-4 mb-16 text-center">
-            <span className="text-xs uppercase tracking-widest text-acc font-semibold">Initiatives</span>
-            <h2 className="text-3xl md:text-5xl font-syne font-bold tracking-tight">Key Projects</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-            {[
-              {
-                num: "01",
-                title: "E-Commerce Project – Shopify Store & Meta Ads",
-                type: "Jan–Feb 2025",
-                desc: "Built and optimized a Shopify store (product listings, catalog structuring, storefront UX). Launched Meta Ads generating ₹7,385 in sales within one month."
-              },
-              {
-                num: "02",
-                title: "August Bioscience – Affiliate Marketing",
-                type: "Nov–Dec 2024",
-                desc: "Executed affiliate marketing campaigns via social media, email, influencer tie-ups, and paid promotions. Drove ₹5,000 in product sales and earned ₹1,000 commission."
-              },
-              {
-                num: "03",
-                title: "Unbrand to Brand – USHMR",
-                type: "Aug–Sept 2024",
-                desc: "Conducted business model analysis and built brand identity (logo & positioning). Achieved ₹10,000 in revenue across sourcing, branding, and sales."
-              },
-              {
-                num: "04",
-                title: "Alankrita – Handcrafted Jewelry Brand",
-                type: "Social media-driven marketing strategy, finance management, customer engagement",
-                desc: "Achieved ₹51,644 revenue with 70.3% profit margin."
-              }
-            ].map((proj, idx) => (
-              <motion.div
-                key={idx}
-                whileHover={{ y: -6 }}
-                className="relative overflow-hidden group glassmorphism p-8 rounded-2xl border-white/5 hover:border-acc/20 transition-all duration-500"
-              >
-                {/* Large Ghost Number in Background */}
-                <div className="absolute right-4 bottom-4 font-syne text-[100px] md:text-[130px] font-extrabold text-white/[0.02] group-hover:text-acc/[0.03] transition-colors duration-500 pointer-events-none select-none">
-                  {proj.num}
-                </div>
-
-                <span className="px-3 py-1 bg-acc/10 text-acc text-[9px] uppercase font-bold tracking-widest rounded-full border border-acc/20 mb-6 inline-block">
-                  {proj.type}
+      {/* ============================== CONTACT ============================== */}
+      <section id="contact" className="px-5 py-24 md:py-32">
+        <Reveal className="mx-auto max-w-6xl">
+          <div className="relative overflow-hidden rounded-[2.5rem] bg-brand px-7 py-16 md:px-16 md:py-24 text-white shadow-lift">
+            <div aria-hidden className="absolute -top-24 -right-24 h-80 w-80 rounded-full bg-white/20 blur-3xl" />
+            <div aria-hidden className="absolute -bottom-32 -left-16 h-80 w-80 rounded-full bg-rose/40 blur-3xl" />
+            <div className="relative grid gap-12 md:grid-cols-[1.3fr_1fr] md:items-end">
+              <div>
+                <span className="inline-flex rounded-full bg-white/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] backdrop-blur">
+                  Get in touch
                 </span>
-
-                <h3 className="font-syne text-xl md:text-2xl font-bold text-white group-hover:text-acc transition-colors duration-300 mt-2 mb-3">
-                  {proj.title}
-                </h3>
-                <p className="text-zinc-500 text-xs md:text-sm leading-relaxed max-w-md">
-                  {proj.desc}
+                <h2 className="mt-6 font-display text-5xl md:text-7xl font-bold tracking-tight leading-[0.98]">
+                  Let&apos;s build something <span className="font-serif italic font-normal">that grows.</span>
+                </h2>
+                <p className="mt-6 max-w-lg text-lg text-white/80">
+                  Need SEO that ranks, ads that sell or a website that converts? I&apos;m open to freelance projects, brand collaborations and
+                  consulting.
                 </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </motion.section>
-
-      {/* CERTIFICATIONS */}
-      <motion.section
-        id="certifications"
-        variants={sectionVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        className="w-full py-24 md:py-32 px-6 md:px-12 bg-white/[0.01] border-t border-white/5"
-      >
-        <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col gap-4 mb-16 text-center">
-            <span className="text-xs uppercase tracking-widest text-acc font-semibold">Qualifications</span>
-            <h2 className="text-3xl md:text-5xl font-syne font-bold tracking-tight">Certifications</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {[
-              {
-                title: "Digital Marketing Mastery",
-                issuer: "IIT Roorkee",
-                date: "Feb 2025",
-                desc: "Acquired depth in platform bidding algorithms, SEO architecture, audience modeling, and marketing automation analytics."
-              },
-              {
-                title: "SEBI Investor Certification 46/50",
-                issuer: "National Institute of Securities Markets (NISM)",
-                date: "Jan 2025",
-                desc: "Demonstrated technical proficiency in investment strategies, asset analysis, and security regulatory operations."
-              },
-              {
-                title: "Data Visualization with Python",
-                issuer: "IBM",
-                date: "Dec 2024",
-                desc: "Trained in quantitative graphing techniques, parsing and formatting complex tables using Matplotlib, Seaborn, and Pandas libraries."
-              },
-              {
-                title: "Financial Markets & Investment Strategies",
-                issuer: "Global Institutional Program",
-                date: "Ongoing",
-                desc: "Expanding frameworks on capital allocation metrics, valuation modeling, risk mitigation, and corporate finance planning."
-              }
-            ].map((cert, idx) => (
-              <div
-                key={idx}
-                className="group glassmorphism p-6 rounded-2xl border-white/5 hover:border-acc/20 transition-all duration-500 flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex justify-between items-start gap-4 mb-3">
-                    <h3 className="font-syne text-base md:text-lg font-bold text-white group-hover:text-acc transition-colors duration-300">
-                      {cert.title}
-                    </h3>
-                    <span className="text-zinc-500 font-syne font-semibold text-xs whitespace-nowrap">
-                      {cert.date}
+              </div>
+              <div className="grid gap-3">
+                {[
+                  { label: "Email me", value: CONTACT.email, href: `mailto:${CONTACT.email}` },
+                  { label: "LinkedIn", value: "rahul-rai2003", href: CONTACT.linkedin, external: true },
+                  { label: "Call me", value: CONTACT.phone, href: `tel:${CONTACT.phone}` },
+                ].map((c) => (
+                  <a
+                    key={c.label}
+                    href={c.href}
+                    {...(c.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                    className="group flex items-center justify-between gap-4 rounded-2xl bg-white px-5 py-4 text-ink transition-all hover:-translate-y-0.5 hover:shadow-xl"
+                  >
+                    <span className="min-w-0">
+                      <span className="block text-xs font-semibold uppercase tracking-wider text-muted">{c.label}</span>
+                      <span className="block truncate font-semibold">{c.value}</span>
                     </span>
-                  </div>
-                  <h4 className="text-acc text-xs font-semibold tracking-wider mb-2 uppercase">
-                    {cert.issuer}
-                  </h4>
-                  <p className="text-zinc-500 text-xs md:text-sm leading-relaxed">
-                    {cert.desc}
-                  </p>
-                </div>
+                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-violet-soft text-violet transition-colors group-hover:bg-violet group-hover:text-white">
+                      <Arrow />
+                    </span>
+                  </a>
+                ))}
               </div>
+            </div>
+          </div>
+        </Reveal>
+      </section>
+
+      <footer className="px-5 pb-10">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 border-t border-line pt-8 text-sm text-muted sm:flex-row">
+          <span>© {new Date().getFullYear()} Rahul Kumar Rai. All rights reserved.</span>
+          <div className="flex gap-6">
+            {["about", "projects", "contact"].map((l) => (
+              <a key={l} href={`#${l}`} className="capitalize hover:text-violet">
+                {l}
+              </a>
             ))}
-          </div>
-        </div>
-      </motion.section>
-
-      {/* ACHIEVEMENTS */}
-      <motion.section
-        id="awards"
-        variants={sectionVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        className="w-full py-24 md:py-32 px-6 md:px-12 border-t border-white/5"
-      >
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col gap-4 mb-16 text-center">
-            <span className="text-xs uppercase tracking-widest text-acc font-semibold">Honors</span>
-            <h2 className="text-3xl md:text-5xl font-syne font-bold tracking-tight">Achievements</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                title: "1st Position & Most Innovative Entrepreneurship–Startup Award",
-                desc: "Innotek | LPU",
-                meta: "Apr 2025",
-                icon: "🥇"
-              },
-              {
-                title: "Top 100 Student Innovations",
-                desc: "SBI College Youth Ideathon | IIT Delhi",
-                meta: "Mar 2025",
-                icon: "💡"
-              },
-              {
-                title: "Generated ₹11,900 revenue from live event with ₹1,500 investment",
-                desc: "Lovely Professional University (LPU)",
-                meta: "Feb 2025",
-                icon: "💰"
-              },
-              {
-                title: "2nd Runner-Up",
-                desc: "Tourism Tapestry | LPU",
-                meta: "Jan 2025",
-                icon: "🥉"
-              },
-              {
-                title: "1st Position – Innovation Nation",
-                desc: "Venture Capital Competition | LPU",
-                meta: "Dec 2024",
-                icon: "🥇"
-              },
-              {
-                title: "Selected Innovation Exhibitor",
-                desc: "E-NNOVATE International Summit, Poland",
-                meta: "Jun 2025",
-                icon: "🌍"
-              }
-            ].map((ach, idx) => (
-              <div
-                key={idx}
-                className="group glassmorphism p-6 rounded-2xl border-white/5 hover:border-acc/20 transition-all duration-500 flex flex-col justify-between"
-              >
-                <div>
-                  <div className="text-3xl mb-4 group-hover:scale-110 transition-transform duration-300 origin-left">
-                    {ach.icon}
-                  </div>
-                  <h3 className="font-syne text-base md:text-lg font-bold text-white group-hover:text-acc transition-colors duration-300 mb-2">
-                    {ach.title}
-                  </h3>
-                  <p className="text-zinc-500 text-xs md:text-sm leading-relaxed">
-                    {ach.desc}
-                  </p>
-                </div>
-                <div className="text-zinc-600 font-bold text-[10px] tracking-widest uppercase mt-4">
-                  {ach.meta}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </motion.section>
-
-      {/* CONTACT SECTION */}
-      <motion.section
-        id="contact"
-        variants={sectionVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        className="w-full py-24 md:py-32 px-6 md:px-12 bg-white/[0.01] border-t border-white/5"
-      >
-        <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
-          <span className="text-xs uppercase tracking-widest text-acc font-semibold mb-6">Get in Touch</span>
-          <h2 className="text-4xl md:text-7xl font-syne font-extrabold tracking-tighter leading-tight mb-8">
-            Let&apos;s work <span className="text-acc">together.</span>
-          </h2>
-          <p className="text-zinc-400 text-sm md:text-base leading-relaxed max-w-lg mb-12">
-            Looking for a quantitative partner to model strategy, coordinate brand channels, or assist portfolio audits? Connect with me.
-          </p>
-
-          <div className="flex flex-wrap justify-center gap-4 md:gap-6">
-            <a
-              href="mailto:rahulkumarrai.work@gmail.com"
-              className="px-6 py-3.5 bg-acc hover:bg-opacity-90 rounded-lg font-bold text-xs md:text-sm uppercase tracking-wider flex items-center gap-2 transition-all duration-300 accent-glow"
-            >
-              <MailIcon />
-              Email Me
-            </a>
-            <a
-              href="https://www.linkedin.com/in/rahul-rai2003/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-6 py-3.5 bg-zinc-900 border border-zinc-800 hover:border-zinc-700 hover:bg-zinc-800/70 rounded-lg font-bold text-xs md:text-sm uppercase tracking-wider flex items-center gap-2 transition-all duration-300"
-            >
-              <LinkedInIcon />
-              LinkedIn
-            </a>
-            <a
-              href="tel:+919876543210"
-              className="px-6 py-3.5 bg-zinc-900 border border-zinc-800 hover:border-zinc-700 hover:bg-zinc-800/70 rounded-lg font-bold text-xs md:text-sm uppercase tracking-wider flex items-center gap-2 transition-all duration-300"
-            >
-              <PhoneIcon />
-              Call Me
-            </a>
-          </div>
-        </div>
-      </motion.section>
-
-      {/* FOOTER */}
-      <footer className="w-full py-8 px-6 md:px-12 border-t border-white/5 text-center text-zinc-600 text-xs md:text-sm font-medium">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-          <p>© 2025 Rahul Kumar Rai. All rights reserved.</p>
-          <div className="flex gap-6 text-zinc-500">
-            <a href="#about" className="hover:text-acc transition-colors duration-300">About</a>
-            <a href="#projects" className="hover:text-acc transition-colors duration-300">Projects</a>
-            <a href="#contact" className="hover:text-acc transition-colors duration-300">Contact</a>
           </div>
         </div>
       </footer>
-      
     </div>
   );
 }
