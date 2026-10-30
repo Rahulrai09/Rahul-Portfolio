@@ -283,7 +283,7 @@ export const SHELF: ShelfItem[] = [
   {
     id: "mnr",
     kind: "Experience",
-    title: "Digital Marketing Intern",
+    title: "Digital Marketing Trainee",
     org: "MNR Solutions — TWEOV (Silver Brand)",
     place: "Noida",
     period: "May 2025 – Oct 2025",
