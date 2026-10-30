@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: "Rahul Kumar Rai — Digital Marketing & Growth",
   description:
-    "Rahul Kumar Rai — MBA (Digital Marketing & Finance). SEO, performance marketing, social media, AI video and conversion-focused websites. Open to freelance and consulting.",
+    "Rahul Kumar Rai — Marketing Executive at Pulse with an MBA in Marketing & Finance. Social media, Meta Ads, SEO and conversion-focused websites. Open to freelance and consulting.",
   keywords: ["Rahul Kumar Rai", "Digital Marketing", "SEO", "Performance Marketing", "Meta Ads", "Website Builder", "Portfolio"],
   authors: [{ name: "Rahul Kumar Rai" }],
   openGraph: {

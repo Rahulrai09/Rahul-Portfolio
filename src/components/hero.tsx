@@ -218,7 +218,7 @@ function AboutBlock({ className = "", style }: { className?: string; style?: Rea
         <span className="h-1.5 w-1.5 rounded-full bg-cobalt" /> (ABOUT)
       </motion.div>
       <motion.p {...rise(3)} className="mt-4 max-w-[300px] text-[14px] leading-[1.45] text-ink-soft">
-        Digital marketer & MBA building brands that rank, convert and grow — SEO, ads, social and websites.
+        Marketing Executive at Pulse with an MBA in Marketing & Finance — building brands that rank, convert and grow.
       </motion.p>
       <motion.div {...rise(4)} className="mt-6">
         <a href="#contact" className="btn-dark">
@@ -320,9 +320,9 @@ export function Hero() {
             className="wide absolute z-10 flex justify-center gap-[calc(var(--u)*34)] text-[13px] font-[600] uppercase tracking-[0.02em] text-white/90"
             style={{ left: u(460), width: u(520), top: u(860) }}
           >
-            <span>IIT Roorkee</span>
-            <span>IBM</span>
-            <span>NISM</span>
+            <span>Pulse</span>
+            <span>Meta Ads</span>
+            <span>Shopify</span>
           </motion.div>
         </div>
 
@@ -421,7 +421,7 @@ export function Statement() {
 /* ------------------------------------------------------------------ */
 /*  TRUST PANEL                                                        */
 /* ------------------------------------------------------------------ */
-const DISCS = ["IIT", "IBM", "NISM", "LPU", "SBI", "PU", "KV", "E-N"];
+const DISCS = ["PULSE", "META", "SEO", "LPU", "SBI", "PU", "KV", "E-N"];
 
 function Laurel() {
   const leaves = Array.from({ length: 7 });
@@ -462,8 +462,8 @@ export function TrustPanel() {
           </h2>
           <FadeTile className="absolute right-[6%] top-[-6px] hidden md:grid" glyph="✳" />
           <p className="mt-8 max-w-[380px] text-[14.5px] leading-[1.55] text-white/60">
-            From an NGO&apos;s 1,000+ donor records to live SEO campaigns and my own brands, every number here comes from work that shipped — certified by IIT
-            Roorkee, IBM and NISM along the way.
+            From an NGO&apos;s 1,000+ donor records to live SEO campaigns, my own brands and the Pulse websites, every number here comes from work
+            that shipped.
           </p>
         </div>
 

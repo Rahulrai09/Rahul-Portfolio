@@ -10,7 +10,7 @@ import { ease } from "./ui";
 const N = SHELF.length;
 const COPIES = 3;
 const TOTAL = N * COPIES;
-const START = SHELF.findIndex((s) => s.id === "mnr");
+const START = SHELF.findIndex((s) => s.id === "pulse-exec");
 
 const mod = (a: number, n: number) => ((a % n) + n) % n;
 const smooth = (x: number) => x * x * (3 - 2 * x);

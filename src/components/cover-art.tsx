@@ -6,7 +6,6 @@ import type { ShelfItem } from "@/data";
 export const KIND_SHORT: Record<ShelfItem["kind"], string> = {
   Experience: "EXP",
   Education: "EDU",
-  Certification: "CERT",
   Award: "AWD",
 };
 

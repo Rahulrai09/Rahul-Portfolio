@@ -148,7 +148,18 @@ function ProjectCard({
               <h3 className="mt-2 text-[22px] font-medium leading-tight tracking-[-0.02em] md:text-[34px]">{p.name}</h3>
             </div>
           </div>
-          <span className="rounded-full border-2 border-white/70 px-6 py-2.5 text-[12px] font-medium uppercase tracking-[0.18em] md:text-[13px]">{p.period}</span>
+          {"url" in p && p.url ? (
+            <a
+              href={p.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border-2 border-white/70 px-6 py-2.5 text-[12px] font-medium uppercase tracking-[0.18em] transition-colors hover:bg-white/10 md:text-[13px]"
+            >
+              Visit site <ArrowUR />
+            </a>
+          ) : (
+            <span className="rounded-full border-2 border-white/70 px-6 py-2.5 text-[12px] font-medium uppercase tracking-[0.18em] md:text-[13px]">{p.period}</span>
+          )}
         </div>
 
         <div className="grid gap-3 md:grid-cols-[40%_1fr]">

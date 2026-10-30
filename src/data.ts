@@ -21,9 +21,9 @@ export const NAV = [
 export const ROLES = ["SEO", "Performance Marketing", "Social Media", "AI Video", "Website Building"];
 
 export const CREDENTIAL_MARKS = [
-  { name: "IIT Roorkee", glyph: "◆" },
-  { name: "IBM", glyph: "▤" },
-  { name: "NISM", glyph: "◎" },
+  { name: "Pulse", glyph: "◆" },
+  { name: "Meta Ads", glyph: "▤" },
+  { name: "Shopify", glyph: "◎" },
   { name: "LPU", glyph: "▲" },
   { name: "SBI Ideathon", glyph: "✳" },
   { name: "E-NNOVATE", glyph: "◐" },
@@ -48,11 +48,37 @@ export const SERVICES = [
   },
   {
     name: "Website Building",
-    desc: "Fast, modern websites and Shopify stores designed around SEO and conversion — from catalogue structure and storefront UX to launch.",
+    desc: "Fast, modern websites and Shopify stores designed around SEO and conversion — including Pulseio.in and Pulsemotion.in, from structure and storefront UX to launch.",
   },
 ];
 
 export const PROJECTS = [
+  {
+    name: "Pulseio.in",
+    category: "Company website · Pulse",
+    period: "Pulse",
+    metric: "Live",
+    metricLabel: "Website for a medical equipment maker",
+    url: "https://pulseio.in",
+    did: [
+      "Built the company website for Pulse, a Bengaluru medical equipment maker serving clinics and hospitals across India",
+      "Structured product categories — critical care, renal, cardiac, surgical, diagnostics and more — for search and enquiries",
+    ],
+    bars: [14, 22, 30, 36, 45, 56, 64, 78],
+  },
+  {
+    name: "Pulsemotion.in",
+    category: "E-commerce website · Pulse Motion",
+    period: "Pulse",
+    metric: "Live",
+    metricLabel: "Electric wheelchair store for India",
+    url: "https://pulsemotion.in",
+    did: [
+      "Built the Pulse Motion store for electric wheelchairs — premium, lightweight and heavy-duty ranges, accessories and spares",
+      "Set up conversion paths for rentals, demo bookings and the donation programme, backed by Meta Ads",
+    ],
+    bars: [12, 18, 27, 33, 42, 50, 61, 72],
+  },
   {
     name: "Shopify Store & Meta Ads",
     category: "E-commerce · Paid social",
@@ -97,6 +123,7 @@ export const PROJECTS = [
 /** Tiles for the scroll-driven rows. */
 export const TILES = [
   { k: "+40%", v: "Organic impressions", tone: "cobalt" },
+  { k: "2 sites", v: "Pulseio.in · Pulsemotion.in", tone: "ice" },
   { k: "₹7,385", v: "Meta Ads sales · month one", tone: "ink" },
   { k: "SEO", v: "Keyword clustering · SERP", tone: "paper" },
   { k: "+27%", v: "CTR & session duration", tone: "ice" },
@@ -108,15 +135,15 @@ export const TILES = [
   { k: "70.3%", v: "Profit margin · Alankrita", tone: "ink" },
   { k: "1,000+", v: "Donor & campaign records", tone: "ice" },
   { k: "50+", v: "Competitor link profiles", tone: "paper" },
-  { k: "GA4", v: "Search Console & analytics", tone: "cobalt" },
+  { k: "Pulse", v: "Intern → Marketing Executive", tone: "cobalt" },
   { k: "₹11,900", v: "Live event revenue on ₹1,500", tone: "ink" },
   { k: "AI Video", v: "Faster, sharper content", tone: "paper" },
   { k: "35–45%", v: "Reach & engagement growth", tone: "ice" },
 ] as const;
 
-/* ---------------- Journey shelf (education, experience, certs, awards) ---------------- */
+/* ---------------- Journey shelf (experience, education, awards) ---------------- */
 
-export type ShelfKind = "Experience" | "Education" | "Certification" | "Award";
+export type ShelfKind = "Experience" | "Education" | "Award";
 
 export type ShelfItem = {
   id: string;
@@ -189,7 +216,7 @@ export const SHELF: ShelfItem[] = [
   {
     id: "mba",
     kind: "Education",
-    title: "MBA — Digital Marketing & Finance",
+    title: "MBA — Marketing & Finance",
     org: "Lovely Professional University",
     period: "Aug 2024 – May 2026",
     year: 2026,
@@ -197,17 +224,6 @@ export const SHELF: ShelfItem[] = [
     summary: "Venture models, business strategy and computational analytics — with live ventures run alongside the degree.",
     palette: ["#0F1B4D", "#F4F2ED", "#7FA0FF"],
     motif: "arc",
-  },
-  {
-    id: "ibm",
-    kind: "Certification",
-    title: "Data Visualization with Python",
-    org: "IBM",
-    period: "Dec 2024",
-    year: 2024,
-    summary: "Quantitative graphing and complex-table formatting with Matplotlib, Seaborn and Pandas.",
-    palette: ["#F4F2ED", "#141414", "#1F3FB0"],
-    motif: "bars",
   },
   {
     id: "vc",
@@ -230,29 +246,6 @@ export const SHELF: ShelfItem[] = [
     summary: "Placed third overall in LPU's Tourism Tapestry competition.",
     palette: ["#E9E4D8", "#141414", "#1F3FB0"],
     motif: "sun",
-  },
-  {
-    id: "nism",
-    kind: "Certification",
-    title: "SEBI Investor Certification",
-    org: "NISM",
-    period: "Jan 2025",
-    year: 2025,
-    badge: "46 / 50",
-    summary: "Investment strategy, asset analysis and securities regulation.",
-    palette: ["#141414", "#F4F2ED", "#7FA0FF"],
-    motif: "rings",
-  },
-  {
-    id: "iitr",
-    kind: "Certification",
-    title: "Digital Marketing Mastery",
-    org: "IIT Roorkee",
-    period: "Feb 2025",
-    year: 2025,
-    summary: "Platform bidding algorithms, SEO architecture, audience modelling and marketing automation analytics.",
-    palette: ["#DCE5FF", "#0F1B4D", "#1F3FB0"],
-    motif: "arc",
   },
   {
     id: "event",
@@ -317,15 +310,38 @@ export const SHELF: ShelfItem[] = [
     motif: "rings",
   },
   {
-    id: "gip",
-    kind: "Certification",
-    title: "Financial Markets & Investment Strategies",
-    org: "Global Institutional Program",
-    period: "Ongoing",
+    id: "pulse-intern",
+    kind: "Experience",
+    title: "Marketing Intern",
+    org: "Pulse",
+    place: "Medical equipment · Bengaluru",
+    period: "Internship",
     year: 2026,
-    summary: "Capital allocation, valuation modelling, risk mitigation and corporate finance planning.",
-    palette: ["#E9E4D8", "#141414", "#1F3FB0"],
-    motif: "steps",
+    summary: "Joined Pulse as a marketing intern — running social media and Meta Ads, and building the company's websites.",
+    points: [
+      "Managed Pulse's social media channels and content.",
+      "Planned and ran Meta Ads campaigns for Pulse and Pulse Motion.",
+      "Built two websites: Pulseio.in and Pulsemotion.in.",
+    ],
+    palette: ["#F4F2ED", "#141414", "#1F3FB0"],
+    motif: "bars",
+  },
+  {
+    id: "pulse-exec",
+    kind: "Experience",
+    title: "Marketing Executive",
+    org: "Pulse",
+    place: "Converted from internship · Current role",
+    period: "Present",
+    year: 2026,
+    summary: "Converted from intern to full-time Marketing Executive — owning social media, Meta Ads and the Pulse websites.",
+    points: [
+      "Handle social media for Pulse and Pulse Motion.",
+      "Run and optimise Meta Ads campaigns.",
+      "Built and maintain Pulseio.in (company site) and Pulsemotion.in (electric wheelchair store).",
+    ],
+    palette: ["#1F3FB0", "#F4F2ED", "#9DB4FF"],
+    motif: "arc",
   },
 ];
 
@@ -333,6 +349,5 @@ export const SHELF_TABS: { label: string; kind: ShelfKind | "All" }[] = [
   { label: "All", kind: "All" },
   { label: "Experience", kind: "Experience" },
   { label: "Education", kind: "Education" },
-  { label: "Certifications", kind: "Certification" },
   { label: "Awards", kind: "Award" },
 ];
