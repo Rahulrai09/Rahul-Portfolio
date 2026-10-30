@@ -4,7 +4,7 @@
 
 export const CONTACT = {
   email: "rahulkumarrai.work@gmail.com",
-  phone: "+919876543210",
+  phone: "+918571926873",
   linkedin: "https://www.linkedin.com/in/rahul-rai2003/",
 };
 

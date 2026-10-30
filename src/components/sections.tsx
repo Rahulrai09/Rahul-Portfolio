@@ -230,7 +230,7 @@ export function Contact() {
   const links = [
     { label: "Email", value: CONTACT.email, href: `mailto:${CONTACT.email}` },
     { label: "LinkedIn", value: "in/rahul-rai2003", href: CONTACT.linkedin, ext: true },
-    { label: "Phone", value: CONTACT.phone.replace(/^\+91/, "+91 "), href: `tel:${CONTACT.phone}` },
+    { label: "Phone", value: CONTACT.phone.replace(/^\+91(\d{5})(\d{5})$/, "+91 $1 $2"), href: `tel:${CONTACT.phone}` },
   ];
   return (
     <section id="contact" className="relative z-10 -mt-12 rounded-t-[40px] bg-paper px-5 pb-16 pt-20 sm:rounded-t-[50px] md:-mt-14 md:rounded-t-[60px] md:px-10 md:pb-20 md:pt-28">
