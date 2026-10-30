@@ -130,64 +130,71 @@ function ProjectCard({
   total: number;
   progress: MotionValue<number>;
 }) {
-  const target = 1 - (total - 1 - i) * 0.03;
+  const target = 1 - (total - 1 - i) * 0.02;
   const scale = useTransform(progress, [i / total, 1], [1, target]);
+  const hasUrl = "url" in p && !!p.url;
   return (
-    <div className="md:sticky md:h-[88vh]" style={{ top: `calc(96px + ${i * 28}px)` }}>
+    <div className="md:sticky md:h-[calc(100vh-40px)]" style={{ top: `calc(84px + ${i * 14}px)` }}>
       <motion.article
         style={{ scale, transformOrigin: "top center" }}
-        className="mb-6 rounded-[36px] border-2 border-white/70 bg-night p-4 text-[#f4f4f4] sm:rounded-[48px] sm:p-6 md:mb-0 md:rounded-[56px] md:p-8"
+        className="mb-5 flex flex-col rounded-[32px] border-2 border-white/60 bg-night p-4 text-[#f4f4f4] shadow-[0_-24px_60px_-20px_rgba(0,0,0,0.9)] sm:p-6 md:mb-0 md:h-[clamp(400px,calc(100vh-150px),540px)] md:rounded-[44px] md:p-7"
       >
-        <div className="flex flex-wrap items-end justify-between gap-4 px-2 pb-5 md:px-4 md:pb-7">
-          <div className="flex items-end gap-4 md:gap-8">
-            <span className="wide-104 metal-text font-[700] leading-[0.8] tracking-[-0.06em]" style={{ fontSize: "clamp(3rem, 8vw, 120px)" }}>
+        {/* header */}
+        <div className="flex flex-wrap items-center justify-between gap-4 px-1 pb-4 md:px-3 md:pb-5">
+          <div className="flex min-w-0 items-center gap-4 md:gap-6">
+            <span className="wide-104 metal-text shrink-0 font-[700] leading-[0.8] tracking-[-0.06em]" style={{ fontSize: "clamp(2.6rem, 5vw, 76px)" }}>
               {String(i + 1).padStart(2, "0")}
             </span>
-            <div>
-              <div className="lbl text-white/50">{p.category}</div>
-              <h3 className="mt-2 text-[22px] font-medium leading-tight tracking-[-0.02em] md:text-[34px]">{p.name}</h3>
+            <div className="min-w-0">
+              <div className="lbl text-white/55">{p.category}</div>
+              <h3 className="mt-1.5 text-[22px] font-medium leading-tight tracking-[-0.02em] md:text-[30px]">{p.name}</h3>
             </div>
           </div>
-          {"url" in p && p.url ? (
-            <a
-              href={p.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border-2 border-white/70 px-6 py-2.5 text-[12px] font-medium uppercase tracking-[0.18em] transition-colors hover:bg-white/10 md:text-[13px]"
-            >
-              Visit site <ArrowUR />
-            </a>
-          ) : (
-            <span className="rounded-full border-2 border-white/70 px-6 py-2.5 text-[12px] font-medium uppercase tracking-[0.18em] md:text-[13px]">{p.period}</span>
-          )}
+          <div className="flex items-center gap-2">
+            <span className="rounded-full border border-white/30 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.16em] text-white/80 md:text-[12px]">{p.period}</span>
+            {hasUrl && (
+              <a
+                href={(p as { url: string }).url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-ink transition-transform hover:-translate-y-px md:text-[12px]"
+              >
+                Visit site <ArrowUR />
+              </a>
+            )}
+          </div>
         </div>
 
-        <div className="grid gap-3 md:grid-cols-[40%_1fr]">
-          <div className="grid gap-3">
-            <div className="grain relative flex flex-col justify-end overflow-hidden rounded-[28px] bg-[linear-gradient(150deg,#0F1B4D,#1F3FB0_55%,#7FA0FF)] p-6 md:rounded-[40px] md:p-8" style={{ minHeight: "clamp(130px,15vw,210px)" }}>
-              <div className="wide-104 relative text-[44px] font-[640] leading-none tracking-[-0.05em] md:text-[60px]">{p.metric}</div>
-              <div className="relative mt-2 text-[13px] text-white/75">{p.metricLabel}</div>
-            </div>
-            <div className="rounded-[28px] bg-[#f4f2ed] p-6 text-ink md:rounded-[40px] md:p-8" style={{ minHeight: "clamp(150px,18vw,260px)" }}>
-              <div className="lbl text-ink/50">What I did</div>
-              <ul className="mt-4 space-y-3">
-                {p.did.map((d) => (
-                  <li key={d} className="flex gap-3 text-[14px] leading-relaxed md:text-[15px]">
-                    <span className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-cobalt" />
-                    {d}
-                  </li>
-                ))}
-              </ul>
+        {/* body */}
+        <div className="grid min-h-0 flex-1 gap-3 md:grid-cols-2 lg:grid-cols-[1fr_1.4fr_0.9fr]">
+          {/* result */}
+          <div className="grain relative flex min-h-[160px] flex-col justify-between overflow-hidden rounded-[24px] bg-[linear-gradient(150deg,#0F1B4D,#1F3FB0_55%,#7FA0FF)] p-6 md:rounded-[32px] md:p-7">
+            <div className="lbl relative text-white/70">Result</div>
+            <div className="relative">
+              <div className="wide-104 text-[44px] font-[640] leading-none tracking-[-0.05em] md:text-[56px]">{p.metric}</div>
+              <div className="mt-3 text-[15px] leading-snug text-white/85">{p.metricLabel}</div>
             </div>
           </div>
-          <div className="grain relative hidden overflow-hidden rounded-[28px] bg-[linear-gradient(180deg,#F3F5FB,#C9D5F6_55%,#7FA0FF)] md:block md:rounded-[40px]">
+
+          {/* what I did */}
+          <div className="flex flex-col rounded-[24px] bg-[#f4f2ed] p-6 text-ink md:rounded-[32px] md:p-7">
+            <div className="lbl text-ink/55">What I did</div>
+            <ul className="mt-4 space-y-4">
+              {p.did.map((d) => (
+                <li key={d} className="flex gap-3 text-[15px] leading-[1.55] md:text-[17px]">
+                  <span className="mt-[10px] h-1.5 w-1.5 shrink-0 rounded-full bg-cobalt" />
+                  <span>{d}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* growth chart */}
+          <div className="grain relative hidden overflow-hidden rounded-[24px] bg-[linear-gradient(180deg,#F3F5FB,#C9D5F6_55%,#7FA0FF)] lg:block lg:rounded-[32px]">
             <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(15,27,77,0.08)_1px,transparent_1px)] bg-[length:100%_20%]" />
-            <div className="absolute left-8 top-8 text-ink">
-              <div className="lbl text-ink/50">Growth curve</div>
-              <div className="mt-2 text-[15px] font-medium">{p.name}</div>
-            </div>
+            <div className="lbl absolute left-6 top-6 text-ink/55">Growth</div>
             <motion.div
-              className="absolute inset-x-8 bottom-0 flex h-[64%] items-end gap-3"
+              className="absolute inset-x-6 bottom-0 flex h-[70%] items-end gap-2"
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, amount: 0.2 }}
@@ -195,7 +202,7 @@ function ProjectCard({
               {p.bars.map((h, k) => (
                 <motion.span
                   key={k}
-                  className={`flex-1 rounded-t-[12px] ${k === p.bars.length - 1 ? "bg-cobalt" : "bg-white/70"}`}
+                  className={`flex-1 rounded-t-[8px] ${k === p.bars.length - 1 ? "bg-cobalt" : "bg-white/75"}`}
                   variants={{ hidden: { height: "0%" }, show: { height: `${h}%`, transition: { duration: 1.1, delay: 0.1 + k * 0.06, ease } } }}
                 />
               ))}
@@ -217,7 +224,7 @@ export function Work() {
           <span className="metal-text">Work</span>
         </MaskLine>
       </h2>
-      <p className="mx-auto mt-6 max-w-md text-center text-[15px] text-white/50">Case studies from live ventures and campaigns — each one measured in revenue.</p>
+      <p className="mx-auto mt-6 max-w-md text-center text-[15px] text-white/55">Websites, campaigns and ventures I&apos;ve built — scroll through all six.</p>
       <div ref={ref} className="mx-auto mt-14 max-w-6xl md:mt-20">
         {PROJECTS.map((p, i) => (
           <ProjectCard key={p.name} p={p} i={i} total={PROJECTS.length} progress={scrollYProgress} />

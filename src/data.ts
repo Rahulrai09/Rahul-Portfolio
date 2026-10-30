@@ -56,9 +56,9 @@ export const PROJECTS = [
   {
     name: "Pulseio.in",
     category: "Company website · Pulse",
-    period: "Pulse",
+    period: "2026",
     metric: "Live",
-    metricLabel: "Website for a medical equipment maker",
+    metricLabel: "Company website for Pulse, a medical equipment maker",
     url: "https://pulseio.in",
     did: [
       "Built the company website for Pulse, a Bengaluru medical equipment maker serving clinics and hospitals across India",
@@ -69,9 +69,9 @@ export const PROJECTS = [
   {
     name: "Pulsemotion.in",
     category: "E-commerce website · Pulse Motion",
-    period: "Pulse",
+    period: "2026",
     metric: "Live",
-    metricLabel: "Electric wheelchair store for India",
+    metricLabel: "Online store for Pulse Motion electric wheelchairs",
     url: "https://pulsemotion.in",
     did: [
       "Built the Pulse Motion store for electric wheelchairs — premium, lightweight and heavy-duty ranges, accessories and spares",
