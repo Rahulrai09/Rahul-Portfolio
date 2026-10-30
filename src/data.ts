@@ -283,7 +283,7 @@ export const SHELF: ShelfItem[] = [
   {
     id: "mnr",
     kind: "Experience",
-    title: "Digital Marketing Trainee",
+    title: "Digital Marketing Intern",
     org: "MNR Solutions — TWEOV (Silver Brand)",
     place: "Noida",
     period: "May 2025 – Oct 2025",
@@ -314,8 +314,8 @@ export const SHELF: ShelfItem[] = [
     kind: "Experience",
     title: "Marketing Intern",
     org: "Pulse",
-    place: "Medical equipment · Bengaluru",
-    period: "Internship",
+    place: "Internship · Bengaluru",
+    period: "Apr 2026 – Jul 2026",
     year: 2026,
     summary: "Joined Pulse as a marketing intern — running social media and Meta Ads, and building the company's websites.",
     points: [
@@ -331,8 +331,8 @@ export const SHELF: ShelfItem[] = [
     kind: "Experience",
     title: "Marketing Executive",
     org: "Pulse",
-    place: "Converted from internship · Current role",
-    period: "Present",
+    place: "Full-time · Bengaluru · Converted from internship",
+    period: "Jul 2026 – Present",
     year: 2026,
     summary: "Converted from intern to full-time Marketing Executive — owning social media, Meta Ads and the Pulse websites.",
     points: [
